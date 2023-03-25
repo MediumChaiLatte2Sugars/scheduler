@@ -10,3 +10,14 @@ export function getAppointmentsForDay(state) {
 
   return fileteredAppointments;
 }
+
+export function getInterview(state, interview) {
+
+  if (!interview) {
+    return interview;
+  }
+
+  const selectedInterviewer = Object.values(state.interviewers).filter(interviewer => interviewer.id === interview?.interviewer)[0];
+  
+  return { ...interview, interviewer: { ...selectedInterviewer } };
+}
