@@ -82,6 +82,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {Object.values(appointments).map(appointment => <Appointment key={appointment.id} {...appointment} />)}
+        // Additonal Appointment with key of "last" to allow styling rules to apply to last item
         <Appointment key="last" time="5pm" />
       </section>
     </main>
