@@ -49,6 +49,7 @@ export default function Application(props) {
         time={appointment.time}
         interview={interview}
         interviewers={interviewersForDay}
+        bookInterview={bookInterview}
       />
     );
   });
@@ -76,7 +77,7 @@ export default function Application(props) {
       <section className="schedule">
         {schedule}
         {/* Additonal Appointment with key of "last" to allow styling rules to apply to last item */}
-        <Appointment key="last" time="5pm" />
+        <Appointment key="last" time="5pm" bookInterview={bookInterview}/>
       </section>
     </main>
   );
