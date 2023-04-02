@@ -12,14 +12,12 @@ export function getAppointmentsForDay(state) {
 }
 
 export function getInterview(state, interview) {
-  console.log('Get Interviewer Ran', state, interview)
   
   if (!interview) {
     return interview;
   }
 
   const selectedInterviewer = Object.values(state.interviewers).filter(interviewer => interviewer.id === interview?.interviewer)[0];
-  console.log('Expected return for Get Interviewer', { ...interview, interviewer: { ...selectedInterviewer } })
   return { ...interview, interviewer: { ...selectedInterviewer } };
 }
 
@@ -32,7 +30,6 @@ export function getInterviewersForDay(state, day) {
   }
 
   const filteredAppointments = Object.values(state.appointments).filter(selectedAppointment => desiredAppointments.includes(selectedAppointment.id) && selectedAppointment.interview);
-  console.log("Filtered appts:", filteredAppointments);
   if (!filteredAppointments) {
     return filteredAppointments;
   }
