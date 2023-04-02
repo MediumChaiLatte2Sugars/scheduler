@@ -23,7 +23,26 @@ export default function Application(props) {
   const setDay = day => setState({ ...state, day });
 
   function bookInterview(id, interview) {
-    console.log(id, interview);
+    console.log('bookInterview ran', id, interview);
+    console.log('state.appointments before setting: ', state.appointments);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    console.log(`types of interviewer and student`, typeof interview.interviewer, typeof interview.student);
+
+    return axios.put(`/api/appointments/${String(id)}`,
+      { "interview": interview })
+      .then((res) => {
+        setState({ ...state, appointments });
+        return Promise.resolve();
+      })
   }
 
   useEffect(() => {
@@ -32,15 +51,16 @@ export default function Application(props) {
       axios.get('/api/appointments'),
       axios.get('/api/interviewers'),
     ]).then((all) => {
-      console.log("All 2", all[2]);
-      setState(prev => ({ ...prev, days: all[0].data, appointments: Object.values(all[1].data), interviewers: all[2].data }));
-      // console.log("Interviewers:", state.interviewers);
+      console.log("All 1", all[1]);
+      setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
     })
       .catch(err => { console.log(err); });
   }, []);
 
   const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
+
+    console.log("interview before returning appt: ", interview);
 
     return (
       <Appointment
@@ -77,7 +97,7 @@ export default function Application(props) {
       <section className="schedule">
         {schedule}
         {/* Additonal Appointment with key of "last" to allow styling rules to apply to last item */}
-        <Appointment key="last" time="5pm" bookInterview={bookInterview}/>
+        <Appointment key="last" time="5pm" bookInterview={bookInterview} />
       </section>
     </main>
   );
