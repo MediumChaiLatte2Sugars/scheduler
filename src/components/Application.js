@@ -38,7 +38,23 @@ export default function Application(props) {
       .then((res) => {
         setState({ ...state, appointments });
         return Promise.resolve();
-      })
+      });
+  }
+
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState({ ...state, appointments });
+
+    return Promise.resolve();
   }
 
   useEffect(() => {
@@ -63,6 +79,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewersForDay}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
