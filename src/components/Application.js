@@ -52,9 +52,11 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    setState({ ...state, appointments });
-
-    return Promise.resolve();
+    return axios.delete(`/api/appointments/${String(id)}`)
+      .then((res) => {
+        setState({ ...state, appointments });
+        return Promise.resolve();
+      })
   }
 
   useEffect(() => {
