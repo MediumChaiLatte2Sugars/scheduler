@@ -13,7 +13,9 @@ export default function Form(props) {
   };
 
   const cancel = () => {
-    reset();
+    if (!student){
+      reset();
+    }
     props.onCancel();
   }
 
