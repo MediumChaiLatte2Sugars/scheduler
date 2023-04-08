@@ -7,8 +7,7 @@ export default function useVisualMode(initMode) {
   const transition = (newMode, replace = false) => {
     if (replace) {
       setMode(newMode);
-      history.pop();
-      setHistory(prev => [...prev, newMode]);
+      setHistory(prev => [...prev.slice(0, -1), newMode]);
       return;
     }
     setMode(newMode);
@@ -17,9 +16,10 @@ export default function useVisualMode(initMode) {
 
   const back = () => {
     if (history.length > 1) {
-      history.pop();
+      const newHistory = history.slice(0, -1); // create new history array without last element
+      setHistory(newHistory);
+      setMode(newHistory[newHistory.length - 1]); // set mode to new last element
     }
-    setMode(history[history.length - 1]);
   };
 
   return { mode, transition, back };
