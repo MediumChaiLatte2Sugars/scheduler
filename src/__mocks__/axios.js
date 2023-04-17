@@ -66,5 +66,12 @@ export default {
       statusText: "OK",
       data: data[url]
     });
+  }),
+
+  put: jest.fn(url => {
+    return Promise.resolve({
+      status: 204,
+      statusText: "No Content"
+    });
   })
 };
