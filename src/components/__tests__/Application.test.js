@@ -51,7 +51,8 @@ describe("Application", () => {
     fireEvent.click(saveButton);
 
     // 7. Check that the element with the text "Saving" is displayed.
-    expect(getByText(appointment, "Saving")).toBeInTheDocument();
+    const savingIndicator = getByText(appointment, "Saving");
+    expect(savingIndicator).toBeInTheDocument();
 
     // 8. Wait until the element with the text "Lydia Miller-Jones" is displayed.
     try {
@@ -71,6 +72,51 @@ describe("Application", () => {
       .find(day => queryByText(day, "Monday"));
 
     const noSpotsRemainingMsg = queryByText(day, /no spots remaining/i);
+    expect(noSpotsRemainingMsg).toBeInTheDocument();
+  });
+
+  it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+    // 1. Render the Application.
+    const { container, debug } = render(<Application />);
+
+    // 2. Wait until the text "Archie Cohen" is displayed.
+    try {
+      await waitForElement(() => getByText(container, "Archie Cohen"));
+    } catch (err) {
+      console.log(err);
+    }
+
+    const appointments = getAllByTestId(container, "appointment");
+    const appointment = appointments[1];
+
+    // 3. Click the "Delete" button on the booked appointment.
+    const deleteButton = getByAltText(appointment, "Delete");
+    fireEvent.click(deleteButton);
+
+    // 4. Check that the confirmation message is shown.
+    const confirmationMessage = getByText(appointment, /Delete appointment?/i);
+    expect(confirmationMessage).toBeInTheDocument();
+
+    // 5. Click the "Confirm" button on the confirmation.
+    const confirmButton = getByText(appointment, "Confirm");
+    fireEvent.click(confirmButton);
+
+    // 6. Check that the element with the text "Deleting" is displayed.
+    const deletingIndicator = getByText(appointment, "Deleting");
+    expect(deletingIndicator).toBeInTheDocument();
+
+    // 7. Wait until the element with the "Add" button is displayed.
+    try {
+      await waitForElement(() => getByAltText(appointment, "Add"));
+    } catch (err) {
+      console.log(err);
+    }
+
+    // 8. Check that the DayListItem with the text "Monday" also has the text "2 spots remaining".
+    const day = getAllByTestId(container, "day")
+      .find(day => queryByText(day, "Monday"));
+
+    const noSpotsRemainingMsg = queryByText(day, /2 spots remaining/i);
     expect(noSpotsRemainingMsg).toBeInTheDocument();
   });
 });
