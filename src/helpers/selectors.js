@@ -1,5 +1,5 @@
-export function getAppointmentsForDay(state) {
-  const filteredDays = state.days.filter(selectedDay => selectedDay.name === state.day);
+export function getAppointmentsForDay(state, day) {
+  const filteredDays = state.days.filter(selectedDay => selectedDay.name === (state.day || day));
   const desiredAppointments = filteredDays[0]?.appointments;
 
   if (!desiredAppointments) {
@@ -24,7 +24,7 @@ export function getInterview(state, interview) {
 export function getInterviewersForDay(state, day) {
   const filteredDays = state.days.filter(selectedDay => selectedDay.name === day);
   const interviewerIds = filteredDays[0]?.interviewers;
-
+  
   if (!interviewerIds) {
     return filteredDays;
   }
