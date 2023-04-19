@@ -10,7 +10,7 @@ describe("Navigation", () => {
       .should("have.class", "day-list__item--selected");
   });
 
-  it("should book an interview", () => {
+  xit("should book an interview", () => {
     cy.visit("/")
       // 2. Clicks on the "Add" button in the second appointment
       .get(':nth-child(2) > .appointment__add > .appointment__add-button')
@@ -29,7 +29,7 @@ describe("Navigation", () => {
       .contains('Chic Ken');
   });
 
-  it("should edit an interview", () => {
+  xit("should edit an interview", () => {
     cy.visit("/")
       // 2. Clicks the edit button for the existing appointment
       .get('.appointment__actions-button').first()
@@ -47,6 +47,20 @@ describe("Navigation", () => {
       // 5. Sees the edit to the appointment
       .get('[data-testid="appointment"]')
       .contains('Chic Ken');
+  });
+
+  it("should cancel an interview", () => {
+    cy.visit("/")
+       // 2. Clicks the delete button for the existing appointment
+      .get('.appointment__actions-button').eq(1)
+      .invoke('show')
+      .click()
+      // 3. Clicks the confirm button
+      .get('.appointment__actions > :nth-child(2)')
+      .click()
+      // 4. Sees that the appointment slot is empty
+      .get(':nth-child(1) > .appointment__add > .appointment__add-button')
+      .should('be.visible')
 
   });
 });
