@@ -173,6 +173,7 @@ describe("Application", () => {
 
   it("shows the save error when failing to save an appointment", async () => {
     axios.put.mockRejectedValueOnce(new Error("I couldn't do it"));
+
     // 1. Render the Application.
     const { container, debug } = render(<Application />);
 
@@ -212,10 +213,42 @@ describe("Application", () => {
     // 8. Check that the error element is displayed
     await waitForElement(() => getByText(appointment, "Error"));
     expect(getByText(appointment, "Error")).toBeInTheDocument();
-
   });
 
   it("shows the delete error when failing to delete an existing appointment", async () => {
-    axios.delete.mockRejectedValueOnce();
+    axios.delete.mockRejectedValueOnce(new Error("*Cue error music*"));
+
+    // 1. Render the Application.
+    const { container, debug } = render(<Application />);
+
+    // 2. Wait until the text "Archie Cohen" is displayed.
+    try {
+      await waitForElement(() => getByText(container, "Archie Cohen"));
+    } catch (err) {
+      console.log(err);
+    }
+
+    const appointments = getAllByTestId(container, "appointment");
+    const appointment = appointments[1];
+
+    // 3. Click the "Delete" button on the first boooked appointment.
+    const deleteButton = getByAltText(appointment, "Delete");
+    fireEvent.click(deleteButton);
+
+    // 4. Check that the confirmation message is shown.
+    const confirmationMessage = getByText(appointment, /Delete appointment?/i);
+    expect(confirmationMessage).toBeInTheDocument();
+
+    // 5. Click the "Confirm" button on the confirmation.
+    const confirmButton = getByText(appointment, "Confirm");
+    fireEvent.click(confirmButton);
+
+    // 6. Check that the element with the text "Deleting" is displayed.
+    const deletingIndicator = getByText(appointment, "Deleting");
+    expect(deletingIndicator).toBeInTheDocument();
+    
+    // 8. Check that the error element is displayed
+    await waitForElement(() => getByText(appointment, "Error"));
+    expect(getByText(appointment, "Error")).toBeInTheDocument();
   });
 });
