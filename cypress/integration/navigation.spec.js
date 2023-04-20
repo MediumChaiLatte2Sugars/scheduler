@@ -28,12 +28,13 @@ describe("Navigation", () => {
       .click();
 
     // 5. Clicks the save button
-    cy.contains('Save')
+    cy.contains("Save")
       .click();
 
     // 6. Sees the booked appointment
     cy.get('[data-testid="appointment"]')
-      .contains('Chic Ken');
+      .contains("Chic Ken")
+      .should("be.visible")
   });
 
   it("should edit an interview", () => {
@@ -54,22 +55,23 @@ describe("Navigation", () => {
       .click()
       // 5. Sees the edit to the appointment
       .get('[data-testid="appointment"]')
-      .contains('Chic Ken');
+      .contains("Chic Ken")
+      .should("be.visible")
   });
 
   it("should cancel an interview", () => {
     cy.visit("/")
       // 1. Clicks the delete button for the existing appointment
-      .get('.appointment__actions-button')
+      .get(".appointment__actions-button")
       .eq(1)
       .click({ force: true });
 
     // 2. Clicks the confirm button
-    cy.contains('Confirm')
+    cy.contains("Confirm")
       .click();
 
     // 4. Sees that the appointment slot is empty
     cy.get("[alt=Add]")
-      .should('be.visible');
+      .should("be.visible");
   });
 });
