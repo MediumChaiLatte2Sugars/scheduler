@@ -5,7 +5,7 @@ describe("Appointments", () => {
     cy.contains("Monday");
   });
 
-  xit("should book an interview", () => {
+  it("should book an interview", () => {
     // 1. Click the Add button on the open appointment
     cy.get("[alt=Add]")
       .first()
@@ -26,7 +26,7 @@ describe("Appointments", () => {
     cy.contains(".appointment__card--show", "Tori Malcolm");
   });
 
-  xit("should edit an interview", () => {
+  it("should edit an interview", () => {
     // 1. CLick the Edit button
     cy.get(".appointment__actions-button")
       .first()
@@ -57,17 +57,19 @@ describe("Appointments", () => {
     cy.contains("Confirm")
       .click();
 
-    // 3. Check the "Deleting" indicator shown
+    // 3. Check the "Deleting" indicator is shown
     cy.contains("Deleting")
+      .should("exist")
 
     // 4. Check the "Deleting" indicator is gone
-    cy.get("Deleting").should("not.exist")
+    cy.contains("Deleting")
+      .should("not.exist")
     
     // 5. Check that the deleted appointment doesnt exist
     cy.get('[data-testid="appointment"]')
       .first()
       .contains("Archie Cohen")
-      .should('not.exist')
+      .should("not.exist")
 
   });
 });
