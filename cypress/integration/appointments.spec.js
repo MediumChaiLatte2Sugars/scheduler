@@ -22,8 +22,8 @@ describe("Appointments", () => {
       .click();
 
     // 5. Verify the booked appointment is seen
-    cy.contains(".appointment__card--show", "Lydia Miller-Jones");
-    cy.contains(".appointment__card--show", "Tori Malcolm");
+    cy.contains(".appointment__card--show", "Lydia Miller-Jones", "Tori Malcolm")
+      .should("be.visible");
   });
 
   it("should edit an interview", () => {
@@ -43,7 +43,8 @@ describe("Appointments", () => {
       .click();
 
     // 4. Verify the changed appointment is seen
-    cy.contains(".appointment__card--show", "Lydia Miller-Jones", "Tori Malcolm");
+    cy.contains(".appointment__card--show", "Lydia Miller-Jones", "Tori Malcolm")
+      .should("be.visible");
 
   });
 
@@ -59,17 +60,17 @@ describe("Appointments", () => {
 
     // 3. Check the "Deleting" indicator is shown
     cy.contains("Deleting")
-      .should("exist")
+      .should("exist");
 
     // 4. Check the "Deleting" indicator is gone
     cy.contains("Deleting")
-      .should("not.exist")
-    
+      .should("not.exist");
+
     // 5. Check that the deleted appointment doesnt exist
     cy.get('[data-testid="appointment"]')
       .first()
       .contains("Archie Cohen")
-      .should("not.exist")
+      .should("not.exist");
 
   });
 });
