@@ -72,7 +72,7 @@ npm run storybook
 
 1. In the APi server terminal window run the command 
 ```sh
-npm test:server
+npm run test:server
 ```
 > This ensures that the API server is primed with the required test data to pass the current tests
 2. In a separate terminal window, in the root directory of this application, run cypress using the command:
