@@ -89,13 +89,13 @@ https://user-images.githubusercontent.com/114053788/233816645-ed7efc7d-bea4-42ee
 
 ### Errors:
 
-Form input errors
+#### Form input
 ![form-error-demo](https://user-images.githubusercontent.com/114053788/233816936-537e735b-527b-46a0-bf1d-097bd7ffe931.gif)
 
-Save errors
+#### Saving
 ![save-error-demo](https://user-images.githubusercontent.com/114053788/233816950-42a8f434-6a70-4d8d-8db4-30640054281b.gif)
 
-Delete errors
+#### Deleting
 ![delete-error-demo](https://user-images.githubusercontent.com/114053788/233816961-a5752931-ab02-44e9-be2d-b9c6a5a1fd04.gif)
 
 
