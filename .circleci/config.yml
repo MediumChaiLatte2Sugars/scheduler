@@ -1,13 +1,13 @@
 version: 2.1
 
 executors:
-  node-10.16:
+  node-10-16:
     docker:
       - image: circleci/node:10.16
 
 jobs:
   build:
-    executor: node-10.16
+    executor: node-10-16
     working_directory: ~/client
     steps:
       - checkout
